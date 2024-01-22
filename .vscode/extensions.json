@@ -17,6 +17,7 @@
         "ms-python.python",
         "mutantdino.resourcemonitor",
         "foxundermoon.shell-format",
-        "timonwong.shellcheck"
+        "timonwong.shellcheck",
+        "tomoki1207.pdf"
     ]
 }
