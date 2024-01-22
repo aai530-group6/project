@@ -7,15 +7,14 @@ sudo apt-get update --yes -qq
 # SETUP LATEX
 # --------------------------------------------------------------------------- #
 sudo apt-get install --no-install-recommends --yes -qq \
-    biber
+    chktex
 
 # INSTALL TINYTEX
 wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh >/dev/null
-mktexlsr
 
 # FIND TINYTEX BIN DIRECTORY
 TINYTEX_DIR="$(kpsewhich -var-value=SELFAUTOPARENT)"
-BIN_DIR="$TINYTEX_DIR/bin/x86_64-linux"
+BIN_DIR="$TINYTEX_DIR/bin"
 if [ -d "$BIN_DIR" ]; then
     echo "TinyTeX bin directory found: $BIN_DIR"
 else
@@ -45,7 +44,6 @@ tlmgr install \
     breqn \
     caption \
     chktex \
-    collection-fontsrecommended \
     enumitem \
     extsizes \
     fira \
@@ -55,6 +53,7 @@ tlmgr install \
     latexmk \
     microtype \
     multirow \
+    ncntrsbk \
     pdfpages \
     pdflscape \
     pgfgantt \
@@ -62,6 +61,13 @@ tlmgr install \
     synctex \
     texcount
 
-tlmgr update --self --all --reinstall-forcibly-removed
+# UPDATE TEXLIVE MANAGER
+tlmgr update --self --all
+updmap
+texhash
+tlmgr path add
+
+# rm -rf /usr/bin/biber
+# rm -rf /bin/biber
 
 echo "TinyTeX installed to $TINYTEX_DIR"
