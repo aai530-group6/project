@@ -250,7 +250,6 @@ We generate lagged features for critical variables such as sleep duration, restl
 
 To mitigate overfitting and to better reflect the inherent variability in sleep data, we implement a controlled noise augmentation strategy. This involves perturbing selected features with Gaussian noise, characterized by a zero mean and a standard deviation of 0.02. The features subjected to this augmentation include sleep duration metrics, resting heart rate, and measures of restlessness, along with their respective lagged versions up to seven days before. This augmentation aims to improve the models' generalization by preventing them from overly fitting to the nuances of the training dataset, thus enhancing their performance on unseen data.
 
-The augmentation is applied as follows:
 \begin{lstlisting}[language=Python]
 noise_strength = 0.02
 features_to_augment = ['deep_sleep_in_minutes', 'resting_heart_rate', 'restlessness'] + [f'deep_sleep_in_minutes_lag{lag}' for lag in range(1, 8)] + [f'restlessness_lag{lag}' for lag in range(1, 8)]
