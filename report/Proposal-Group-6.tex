@@ -109,7 +109,7 @@
 
 \section{Abstract}
 
-We present a novel approach to sleep quality analysis by integrating Long Short-Term Memory (LSTM) networks with traditional machine learning techniques, using data harvested from Fitbit devices. This study, at the confluence of computational health informatics and machine learning, aims to enhance the predictive accuracy and interpretability of sleep quality metrics derived from wearable technology. Through meticulous preprocessing, exploratory data analysis, and innovative feature engineering, we construct models that not only predict sleep quality with high fidelity but also offer insights into the underlying patterns of sleep behavior. Our methods exemplify the synergy between deep learning and traditional statistical models, showcasing their combined potential in extracting nuanced insights from complex, time-series health data. This research contributes to the burgeoning field of personalized health tracking, offering a scalable framework for leveraging IoT data in health informatics.
+We explore sleep quality prediction by combining Long Short-Term Memory (LSTM) networks with machine learning techniques, using data from Fitbit devices. It aims to improve the accuracy of sleep quality metrics from wearable technology. The research involves preprocessing, data analysis, and feature engineering to build models that predict sleep quality and identify sleep behavior patterns. This approach shows how deep learning and statistical models can work together to analyze health data from IoT devices, contributing to personalized health tracking.
 
 \textbf{Keywords:} Sleep Quality, LSTM, Machine Learning, Fitbit Data, Health Informatics.
 
@@ -117,23 +117,11 @@ We present a novel approach to sleep quality analysis by integrating Long Short-
 
 \subsection{Problem Motivation}
 
-The critical role of sleep in sustaining and enhancing overall health is well-documented, with its influence permeating various parts of human well-being, including cognitive performance, mood regulation, metabolic health, and immune function. Despite its significance, the domain of sleep quality monitoring and analysis often remains underemphasized in both personal health management and clinical settings. This oversight is largely due to the traditional reliance on polysomnography for sleep data collection---a method that is both intrusive and costly, limiting its accessibility and widespread use.
-
-The advent of Internet of Things (IoT) technologies, particularly through wearable devices like Fitbit, has significantly transformed the landscape of sleep tracking. These devices provide a non-invasive and cost-effective approach to collecting comprehensive sleep data, encompassing metrics such as sleep duration, restlessness, and sleep stages. The availability of such detailed data presents novel opportunities for leveraging machine learning algorithms to identify patterns and predict sleep quality with a level of precision previously unattainable.
-
-Despite the promising capabilities of Long Short-Term Memory (LSTM) networks—a subset of deep learning models renowned for their skill in processing time-series data—the integration of these networks with traditional machine learning techniques for sleep data analysis remains largely untapped. This research gap is striking given the complementary strengths of the two approaches: while LSTM networks excel in capturing the temporal dynamics of sleep patterns, traditional machine learning methods provide powerful tools for feature extraction and interpretation.
-
-The limited exploration of the synergistic potential between LSTM networks and traditional machine learning methodologies represents a significant missed opportunity in sleep science. This project seeks to bridge this gap by leveraging the predictive capabilities of LSTM networks with the interpretative strengths of traditional machine learning models. Our aim is to derive deeper insights into sleep patterns, identify key determinants of sleep quality, and develop tailored interventions to enhance sleep health. Through this integrated approach, we aspire to unlock novel understandings of sleep mechanisms and contribute actionable insights towards improving individual and population health, thus advancing the frontier of personalized sleep tracking solutions.
+Sleep plays a crucial role in health, affecting cognitive performance, mood, metabolism, and immune function. However, monitoring sleep quality often requires polysomnography, which is expensive and invasive. Wearable devices like Fitbit offer a simpler way to track sleep, providing data on sleep duration, restlessness, and stages. Despite the potential of LSTM networks for time-series data, their use with machine learning for sleep data analysis is limited. This project aims to combine LSTM networks with machine learning to improve sleep health understanding and interventions.
 
 \subsection{Research Gap}
 
-The proliferation of wearable technology has catalyzed a new era in data acquisition, particularly within the domain of sleep tracking. Wearable devices, exemplified by Fitbit, provide comprehensive insights into sleep metrics such as duration, restlessness, and sleep stages, thus assembling a rich corpus for analytical exploration. Despite the wealth of data at our disposal, a conspicuous research lacuna persists: the fusion of Long Short-Term Memory (LSTM) networks with conventional machine learning (ML) methodologies for the prognostication of sleep quality remains underexplored.
-
-LSTM networks, a specialized cadre within the deep learning spectrum, are celebrated for their skill in handling sequential data, rendering them particularly apt for the analysis of time-series data emanating from wearable devices. But traditional ML paradigms excel in the realms of feature extraction and interpretative analysis, shedding light on the myriad factors that influence sleep quality. Despite the synergistic potential harbored by these analytical frameworks, their amalgamation in sleep data analysis is notably scant. This oversight is especially pronounced given the intricate, multifaceted nature of sleep, characterized by diverse dimensions and temporal patterns that could be more adeptly deciphered through a hybrid analytical lens.
-
-This palpable void in research carries significant implications for the field of sleep science and the broader spectrum of personalized health tracking. The confluence of LSTM's predictive prowess with the interpretative strengths of traditional ML models harbors the promise of unlocking profound insights into sleep dynamics, pinpointing critical determinants of sleep quality, and forging more precise, personalized sleep tracking paradigms. Such advancements stand to redefine our understanding of sleep and its overarching impact on health, charting the course for bespoke interventions and enhanced health outcomes.
-
-This research gap underscores the imperative for interdisciplinary approaches that amalgamate the strengths of disparate analytical techniques within health informatics. Bridging this divide requires not only a strong foundation in machine learning and data science but also an intimate understanding of sleep physiology and the variables that modulate sleep quality. Thus, addressing this research gap emerges as a pivotal opportunity to propel the digital health domain forward, fostering the development of pioneering tools and strategies aimed at augmenting sleep quality and, by extension, holistic well-being.
+Wearable technology has made it easier to collect sleep data, but the combination of LSTM networks and machine learning in sleep quality prediction needs more exploration. LSTMs can analyze sequential data, while traditional machine learning offers feature extraction and interpretation. This research gap suggests a need for studies that integrate these methods to understand sleep better and improve health outcomes.
 
 \section{Dataset and Preprocessing}
 
@@ -142,11 +130,11 @@ This research gap underscores the imperative for interdisciplinary approaches th
 The dataset used in this research originates from Fitbit devices, renowned for their capability to track a lot of health-related metrics such as physical activity, heart rate, and notably, sleep patterns. Our investigation primarily concentrates on the sleep data amassed by these devices, offering an extensive view of user sleep behaviors over prolonged durations. Comprising several thousand individual records, each denoting a single night's sleep per user, this dataset affords a unique lens through which the complexities of sleep patterns and their ramifications on overall health and well-being can be examined.
 
 The dataset is characterized by these key attributes:
-- **Timestamp:** Marks the commencement of each sleep record, providing a temporal frame of reference.
-- **Sleep Duration:** Quantifies the total time spent asleep during the night in minutes, serving as a critical metric for evaluating adherence to recommended sleep duration guidelines.
-- **Restlessness:** Measures the extent of movement during sleep, expressed as the percentage of time characterized by restlessness. Elevated levels of restlessness could signify disturbed sleep, hurting sleep quality.
-- **Sleep Stages:** Enumerates the distribution of time across different sleep stages, namely light sleep, deep sleep, and REM (Rapid Eye Movement) sleep. Insights into the allocation of time within each stage can shed light on sleep architecture and its quality.
-- **Overall Sleep Score:** A synthesized metric computed by Fitbit, encapsulating sleep quality on a scale from 0 to 100. This score amalgamates various factors, including sleep duration, restlessness, and the distribution across sleep stages.
+- \textbf{Timestamp.} Marks the commencement of each sleep record, providing a temporal frame of reference.
+- \textbf{Sleep Duration.} Quantifies the total time spent asleep during the night in minutes, serving as a critical metric for evaluating adherence to recommended sleep duration guidelines.
+- \textbf{Restlessness.} Measures the extent of movement during sleep, expressed as the percentage of time characterized by restlessness. Elevated levels of restlessness could signify disturbed sleep, hurting sleep quality.
+- \textbf{Sleep Stages.} Enumerates the distribution of time across different sleep stages, namely light sleep, deep sleep, and REM (Rapid Eye Movement) sleep. Insights into the allocation of time within each stage can shed light on sleep architecture and its quality.
+- \textbf{Overall Sleep Score.} A synthesized metric computed by Fitbit, encapsulating sleep quality on a scale from 0 to 100. This score amalgamates various factors, including sleep duration, restlessness, and the distribution across sleep stages.
 
 The dataset's comprehensive nature and granularity help with a nuanced analysis of sleep patterns, enabling the exploration of associations between sleep metrics and the delineation of sleep quality predictors. Leveraging this dataset, our endeavor is to formulate predictive models capable of accurately estimating sleep quality based on an array of sleep-related variables. Such models promise to pave the way for personalized sleep interventions, thus fostering improved sleep hygiene and better health outcomes.
 
@@ -156,7 +144,7 @@ To ready the dataset for analytical scrutiny, a sequence of preprocessing steps 
 
 Our preprocessing pipeline includes handling missing values with forward fill, encoding categorical variables, and standardizing features to prepare the dataset for machine learning analysis.
 
-\subsection{Handling Missing Values}
+\subsection{Missing Values}
 
 Missing values pose a considerable challenge to the reliability and validity of data-driven projects. Various reasons contribute to missing data, such as human error, equipment failure, or participant withdrawal. No matter the cause, omitting records with missing entries risks compromising the representativeness and generalizability of the analyzed dataset. Instead, filling missing values with informed estimates enables continued inclusion of affected samples in the dataset, preserving statistical power and reducing bias.
 
@@ -170,7 +158,7 @@ One popular method for addressing missing values is forward fill imputation, whe
 
 Applying this technique to the Fitbit-derived sleep score dataset guarantees consistent representation of missing values throughout the dataset, enabling seamless execution of later operations without disrupting the dataset's internal logic or violating assumptions made by analytical techniques.
 
-\subsection{Transforming Categorical Variables}
+\subsection{Categorical Variables}
 
 Machine learning algorithms typically rely on numerical inputs, posing difficulties when confronted with categorical variables. Encoding categorical variables allows translation of nominal labels into quantitative representations compatible with computational routines. Among the many encoding strategies, label encoding stands out for its simplicity and wide applicability.
 
@@ -190,7 +178,7 @@ f_{label}(x) = k(x)
 
 Label encoding translates categorical features into numerical formats admissible for machine learning algorithms, getting around obstacles imposed by qualitative data structures and giving practitioners versatile tools for integrating disparate data modalities.
 
-\subsection{Standardizing Continuous Features}
+\subsection{Continuous Features}
 
 Continuous features often exhibit varying scales and distributions, complicating comparisons between variables and hampering efficient learning of inherent patterns concealed beneath heterogeneous magnitudes. Standardization addresses this concern by equalizing the spread and location of each feature, rendering them commensurable and enhancing the efficacy of machine learning algorithms.
 
@@ -214,10 +202,10 @@ Descriptive statistics serve as the foundation of our exploratory data analysis,
 
 The overall sleep score is a composite metric calculated by Fitbit, summarizing the quality of sleep on a scale from 0 to 100. Higher scores indicate better sleep quality, incorporating factors such as sleep duration, restlessness, and time spent in various sleep stages. Descriptive statistics for the overall sleep score reveal the average sleep quality experienced by participants and the range of sleep quality within the dataset.
 
-- \textbf{Mean Sleep Score:} The mean indicates the average sleep quality across all participants. A higher mean score suggests that, on average, participants experience good sleep quality.
-- \textbf{Median Sleep Score:} The median offers insight into the central tendency of sleep quality, reducing the impact of outliers. It is the middle value when all sleep scores are arranged in ascending order.
-- \textbf{Standard Deviation:} This measure indicates the variability of sleep scores around the mean. A larger standard deviation suggests a wider range of sleep quality experiences among participants.
-- \textbf{Interquartile Range (IQR):} The IQR, calculated as the difference between the 75th and 25th percentiles, provides a measure of the middle 50\% of sleep scores. It helps identify the spread of the central half of the data.
+- \textbf{Mean Sleep Score.} The mean indicates the average sleep quality across all participants. A higher mean score suggests that, on average, participants experience good sleep quality.
+- \textbf{Median Sleep Score.} The median offers insight into the central tendency of sleep quality, reducing the impact of outliers. It is the middle value when all sleep scores are arranged in ascending order.
+- \textbf{Standard Deviation.} This measure indicates the variability of sleep scores around the mean. A larger standard deviation suggests a wider range of sleep quality experiences among participants.
+- \textbf{Interquartile Range (IQR).} The IQR, calculated as the difference between the 75th and 25th percentiles, provides a measure of the middle 50\% of sleep scores. It helps identify the spread of the central half of the data.
 
 \subsubsection{Restlessness}
 
