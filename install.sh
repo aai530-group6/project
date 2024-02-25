@@ -50,6 +50,7 @@ tlmgr install \
     fontaxes \
     latexindent \
     lipsum \
+    listings \
     latexmk \
     microtype \
     multirow \
