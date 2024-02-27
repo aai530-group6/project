@@ -27,6 +27,7 @@
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,fit}
 \usepackage{xcolor}
 
 \DeclareLanguageMapping{english}{english-apa}
@@ -123,6 +124,78 @@ Sleep plays a crucial role in health, affecting cognitive performance, mood, met
 
 Wearable technology has made it easier to collect sleep data, but the combination of LSTM networks and machine learning in sleep quality prediction needs more exploration. LSTMs can analyze sequential data, while traditional machine learning offers feature extraction and interpretation. This research gap suggests a need for studies that integrate these methods to understand sleep better and improve health outcomes.
 
+\section{System Design}
+
+\subsection{Sensors}
+\begin{itemize}
+    \item \textbf{Location:} Worn on the user's wrist.
+    \item \textbf{Type:} Multi-sensor Fitbit device with motion detection (3-axis accelerometer) and heart rate monitoring (optical heart rate monitor).
+    \item \textbf{Limitations:} Sensors may have limited accuracy and are dependent on proper user wear. They may also be affected by user movement and environmental factors.
+\end{itemize}
+
+\subsection{Edge Processing}
+\begin{itemize}
+    \item \textbf{Computation on the Edge:} Basic preprocessing such as filtering raw data to detect sleep stages and restlessness.
+    \item \textbf{Edge Device Requirements:} Sufficient computational power and memory for real-time data processing and temporary storage.
+\end{itemize}
+
+\subsection{Networking}
+\begin{itemize}
+    \item \textbf{Device Connection:} Fitbit device connects to a smartphone or Wi-Fi network.
+    \item \textbf{Messaging Protocol:} Uses Bluetooth Low Energy (BLE) for syncing with the smartphone app and HTTPS for uploading data to the cloud.
+\end{itemize}
+
+\subsection{Data Storage and Processing}
+\begin{itemize}
+    \item \textbf{Tools and Storage Systems:} Cloud-based storage (e.g., AWS S3) and computing services (e.g., AWS EC2).
+    \item \textbf{Scalability Management:} Auto-scaling services to manage increasing user load.
+    \item \textbf{Machine Learning Insights Production:} Data is processed and features engineered in the cloud. Machine learning models are trained to predict sleep scores and classify sleep stages.
+\end{itemize}
+
+\subsection{Machine Learning Tasks}
+\begin{itemize}
+    \item \textbf{Deep Learning:} An LSTM network predicts the overall sleep score from time series data.
+    \item \textbf{Time Series Prediction:} A traditional machine learning algorithm, such as Random Forest, classifies data into deep sleep and restlessness stages.
+\end{itemize}
+
+
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    auto,
+    block/.style={
+        rectangle,
+        draw,
+        text width=6em,
+        align=center,
+        rounded corners,
+        minimum height=3em
+    },
+    line/.style={
+        draw,
+        -{Latex[length=2.5mm]}
+    }
+]
+
+% Nodes
+\node[block] (sensor) {Sensors};
+\node[block, below=of sensor] (edge) {Edge Processing};
+\node[block, below=of edge] (network) {Networking};
+\node[block, below=of network] (storage) {Data Storage};
+\node[block, below=of storage] (processing) {Data Processing};
+\node[block, below=of processing] (ml) {Machine Learning};
+
+% Edges
+\path[line] (sensor) -- (edge);
+\path[line] (edge) -- (network);
+\path[line] (network) -- (storage);
+\path[line] (storage) -- (processing);
+\path[line] (processing) -- (ml);
+
+% Annotations
+\node[fit=(sensor) (edge) (network) (storage) (processing) (ml), draw, dashed, inner sep=0.5cm, label=above:IoT System Design] (system) {};
+
+\end{tikzpicture}
+
 \section{Dataset and Preprocessing}
 
 \subsection{Dataset Description}
@@ -130,7 +203,6 @@ Wearable technology has made it easier to collect sleep data, but the combinatio
 The dataset used in this research originates from Fitbit devices, renowned for their capability to track a lot of health-related metrics such as physical activity, heart rate, and notably, sleep patterns. Our investigation primarily concentrates on the sleep data amassed by these devices, offering an extensive view of user sleep behaviors over prolonged durations.
 
 The overall sleep score is derived from a combination of several key metrics: (i) the duration score, assessing the total amount of sleep obtained; (ii) the revitalization score, evaluating the participant's sense of refreshment upon awakening, determined by factors such as breathing disruptions and sleeping heart rate; and (iii) the composition score, which accounts for the distribution of various sleep stages throughout the night. Additionally, other sleep-related parameters are tracked, including the resting heart rate, the time spent in the deep sleep stage, and restlessness, which reflects the frequency of the participant's movements, such as tossing and turning, during sleep.
-
 
 \subsection{Preprocessing}
 
@@ -178,7 +250,7 @@ Executing judicious preprocessing techniques, such as handling missing values, t
 
 \section{Exploratory Data Analysis (EDA)}
 
-\subsubsection{Overall Sleep Score}
+\subsection{Overall Sleep Score}
 
 The overall sleep score is a composite metric calculated by Fitbit, summarizing the quality of sleep on a scale from 0 to 100. Higher scores indicate better sleep quality, incorporating factors such as sleep duration, restlessness, and time spent in various sleep stages. Descriptive statistics for the overall sleep score reveal the average sleep quality experienced by participants and the range of sleep quality within the dataset.
 
@@ -195,20 +267,6 @@ We generate lagged features for critical variables such as sleep duration, restl
 \subsection{Injecting Noise to Increase Robustness}
 
 To mitigate overfitting and to better reflect the inherent variability in sleep data, we implement a controlled noise augmentation strategy. This involves perturbing selected features with Gaussian noise, characterized by a zero mean and a standard deviation of 0.02. The features subjected to this augmentation include sleep duration metrics, resting heart rate, and measures of restlessness, along with their respective lagged versions up to seven days before. This augmentation aims to improve the models' generalization by preventing them from overly fitting to the nuances of the training dataset, thus enhancing their performance on unseen data.
-
-\begin{lstlisting}[language=Python]
-noise_strength = 0.02
-features_to_augment = [
-    'deep_sleep_in_minutes',
-    'resting_heart_rate',
-    'restlessness'
-    ] \
-    + [f'deep_sleep_in_minutes_lag{lag}' for lag in range(1, 8)] \
-    + [f'restlessness_lag{lag}' for lag in range(1, 8)]
-
-for feature in features_to_augment:
-    df[feature] += np.random.normal(0, noise_strength, df.shape[0])
-\end{lstlisting}
 
 \subsection{Implications for Sleep Quality Prediction}
 
@@ -295,9 +353,64 @@ The insights gleaned from the Random Forest classifier, particularly regarding f
 
 Evaluating our LSTM and Random Forest models reveals their respective strengths and areas for improvement in predicting sleep quality from wearable device data. The LSTM model shows strong temporal pattern recognition capabilities, while the Random Forest classifier offers valuable insights into feature importance and model interpretability. Together, these models embody a comprehensive analytical framework capable of addressing the multifaceted nature of sleep quality prediction.
 
+Future research directions include refining model architectures, exploring alternative deep learning and traditional ML algorithms, and incorporating additional physiological and environmental variables to enrich the predictive models. By continuously advancing our analytical methodologies, we aim to contribute to the burgeoning field of personalized health tracking, offering actionable insights for improving sleep quality and, by extension, overall well-being.
+
 \subsection{Key Findings}
 
 Our findings reveal that the combined use of LSTM and traditional ML methods can significantly enhance the accuracy of sleep quality predictions, offering deeper insights into the determinants of sleep health. The LSTM model's adeptness at capturing complex temporal dynamics, coupled with the Random Forest classifier's ability to elucidate feature importance, provides a holistic understanding of sleep behavior. This dual-model approach not only helps with precise sleep quality predictions but also identifies potential avenues for targeted interventions aimed at improving sleep hygiene.
+
+% \subsection{Visualizations}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{revitalization_score_distribution.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{weekly_revitalization_score_trend.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{correlation_heatmap.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{deep_sleep_distribution.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{restlessness_distribution.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{model_loss_plot.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{model_loss_mae.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{feature_importance_plot.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{restlessness_category.svg}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{ml_classifier-confusion_matrix.svg}
+% \end{figure}
+
 
 \subsection{Limitations and Challenges}
 
@@ -312,8 +425,6 @@ Looking ahead, several avenues for future research emerge from our study. Expand
 Every member equally contributed. Alec and Brandon did most of the AI related tasks and Jon did most of the non-AI related tasks.
 
 \section{Tableau Dashboard}
-
-The dashboard prominently displays the current sleep status with a large, bold "GOOD" indicator and a numerical score of 88. This immediate visual cue provides a clear and instant understanding of the user's current sleep quality. A line graph titled "Sleep Scores Over Time" tracks the sleep quality scores across a timeline. This choice enables users to identify trends or patterns in their sleep quality over time. The use of a line graph is ideal for showing continuous data and is easily understandable. Two bar charts display the categorical distribution of "Deep Sleep" and "Restlessness," which offer a quick way to see the frequency of each sleep category. Bar charts are a standard visualization for comparing the quantity of different categories, making them a logical choice for this type of data.
 
 The dashboard employs a simple and consistent color scheme, with blue as the primary color for all data visualizations. This uniformity helps to avoid visual overload and makes the dashboard aesthetically pleasing while ensuring that users can focus on the data without distraction. Each visualization is clearly labeled with titles, and the axes are marked to ensure that the information is accessible and easily interpreted. This attention to detail supports the dashboard's usability across a broad audience. The layout follows a logical flow, with the most critical information (current status) positioned at the top left, which is typically where a viewer's gaze first lands. This hierarchy of information ensures that the most important data is seen first. The dashboard adopts a minimalist design approach, avoiding unnecessary elements that could clutter the interface. This design choice emphasizes the data itself and supports a more focused user experience.
 
