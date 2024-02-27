@@ -1,4 +1,4 @@
-# Next-Generation Sleep Quality Analysis and Prediction
+# DeepSleepNet: A DeepLearning Approach to Enhancing Sleep Quality Analysis and Prediction in IoT-Enabled Devices
 
 This project is a collaborative effort by students in the AAI-530 course within the Applied Artificial Intelligence Program at the University of San Diego (USD).
 
