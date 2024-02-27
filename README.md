@@ -1,12 +1,12 @@
-# Next-Generation Health Monitoring: A Real-Time Approach to Fitness Tracking
+# Next-Generation Sleep Quality Analysis and Prediction
 
-This project is a part of the AAI-530 course in the Applied Artificial Intelligence Program at the University of San Diego (USD).
+This project is a collaborative effort by students in the AAI-530 course within the Applied Artificial Intelligence Program at the University of San Diego (USD).
 
 ## Project Status: Active
 
 ## Installation
 
-To use this project, clone the repository and run the installation script with the following commands:
+To get started with this project, clone the repository and execute the installation script using the following commands:
 
 ```bash
 git clone https://github.com/aai530-group6/project.git
@@ -14,39 +14,41 @@ cd project
 ./install.sh
 ```
 
-## Project Intro/Objective
+## Project Introduction/Objective
 
-The main purpose of this project is to develop a comprehensive system that integrates wearable technology, mobile applications, and cloud-based analytics to monitor health and fitness in real-time. Our goal is to provide personalized health insights and motivate users to maintain a healthy lifestyle. This project aims to address the growing need for advanced health tracking solutions and has the potential to impact the health and fitness industry significantly.
+The aim of this project is to design and implement a sophisticated system that leverages wearable technology data, specifically from Fitbit devices, to analyze and predict sleep quality in real-time. By integrating advanced machine learning models with IoT data, we seek to offer personalized insights into sleep patterns, thereby empowering individuals to enhance their sleep hygiene and overall well-being. This initiative addresses the critical need for innovative solutions in sleep health management and has the potential to make a significant impact on personal health monitoring practices.
 
-## Partner(s)/Contributor(s)
+## Partners/Contributors
 
 - Jonathan Agustin
 - Alec Anderson
 - Brandon Smith
 
-## Methods Used
+## Methods Employed
 
-- Data Collection
-- Data Analysis
-- Machine Learning
+- Data Collection and Preprocessing
+- Exploratory Data Analysis
+- Deep Learning and Machine Learning
+- Feature Engineering
 - Data Visualization
-- IoT
+- IoT Integration
 - Cloud Computing
 
-## Technologies
+## Technologies Utilized
 
 - Python
-- TensorFlow
+- TensorFlow and Keras
 - Fitbit API
+- Tableau for Data Visualization
 
 ## Project Description
 
-This project revolves around the PMData dataset, which includes health and fitness data collected from Fitbit Versa 2 smartwatches. The dataset comprises 2,440 activity sessions, over 20 million heart rate measurements, and additional wellness reports and sleep data. We aim to process this data using machine learning algorithms to provide insights into users' health and predict potential health disorders.
+Centered around the PMData dataset, this project harnesses health and fitness data collected from Fitbit Versa 2 smartwatches. The dataset encompasses 2,440 activity sessions, over 20 million heart rate measurements, alongside comprehensive wellness reports and detailed sleep data. Our objective is to employ machine learning algorithms to process this extensive dataset, aiming to uncover meaningful insights into sleep quality and predict potential sleep-related issues effectively.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is made available under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-We would like to express our gratitude to our professors and mentors in the Applied Artificial Intelligence Program at USD, who have provided invaluable guidance and support throughout this project.
+We thanks the faculty and mentors in the Applied Artificial Intelligence Program at USD for their guidance and support throughout the duration of this project.
